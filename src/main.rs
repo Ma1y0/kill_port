@@ -12,7 +12,7 @@ fn main() {
     };
 
     // Get a pid of the process
-    let pid = if let Some(pid) = pid.get(0) {
+    let pid = if let Some(pid) = pid.first() {
         pid.to_owned()
     } else {
         eprintln!("Failed to get pid of process running on port :{}", port);
