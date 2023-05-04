@@ -25,9 +25,9 @@ jobs:
         id: get_last_release
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          command: latest
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          include-assets: false
+          automatic_release_tag: latest
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          include_assets: false
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
       - name: Create new release
