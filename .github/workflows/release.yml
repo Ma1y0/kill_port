@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Rust environment
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Check version in Cargo.toml
+        id: check_version
+        run: echo ::set-output name=version::$(grep version Cargo.toml | head -1 | cut -d '"' -f2)
+
+      - name: Get previous release
+        id: get_last_release
+        uses: andstor/release-tag-action@v1.13.1
+        with:
+          format: "{{range .}}{{.Name}}{{end}}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+
+      - name: Create new release
+        uses: actions/create-release@v1
+        if: ${{ steps.check_version.outputs.version != steps.get_last_release.outputs.result }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.check_version.outputs.version }}
+          release_name: Release ${{ steps.check_version.outputs.version }}
+          body: Release ${{ steps.check_version.outputs.version }}
+          draft: false
+          prerelease: false
+
