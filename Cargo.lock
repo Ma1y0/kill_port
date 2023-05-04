@@ -172,6 +172,7 @@ name = "kill_port"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "netstat",
 ]
 
 [[package]]
@@ -185,6 +186,16 @@ name = "linux-raw-sys"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b64f40e5e03e0d54f03845c8197d0291253cdbedfb1cb46b13c2c117554a9f4c"
+
+[[package]]
+name = "netstat"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "48b71f6e2443299ba97e8c834edcd4724be71da3a751b1be75d8b67022801bf3"
+dependencies = [
+ "bitflags",
+ "libc",
+]
 
 [[package]]
 name = "once_cell"
