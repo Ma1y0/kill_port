@@ -21,7 +21,8 @@ fn main() {
 
     // Try to kill the process
     if let Err(e) = kill_port(pid) {
-        panic!("{}", e);
+        eprintln!("Failed to kill the process with: {}", e);
+        return
     } else {
         println!("Successfully kill process running on port :{} with pid {}", port, pid);
     }
