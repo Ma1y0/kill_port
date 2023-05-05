@@ -1,33 +1,26 @@
-name: Create Release
+name: "pre-release"
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-env:
-  RELEASE_BINARY_NAME: kill_port
+    branches:
+      - "master"
 
 jobs:
-  build-and-release:
-    name: Build and Release Rust Binary
-    runs-on: ubuntu-latest
+  build_and_release:
+    name: "Build and release"
+    runs-on: "ubuntu-latest"
+
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Build Rust Binary
-        run: cargo build --release
-
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
+      - name: "Build & test"
+        run: cargo build --verbose --release
+      
+      - name: Release
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Release ${{ github.ref }}
-          draft: false
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
           prerelease: false
+          draft: false
+          title: "Production Build"
           files: |
-            ./target/release/${{ env.RELEASE_BINARY_NAME }}
+            ./target/release/kill_port
