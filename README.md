@@ -1,9 +1,10 @@
 # kill_port
 *Alfa*
 
-Small cli tool writen in Rust that finds procces runnig on selected port and kills it.
+A small CLI tool written in Rust that finds processes running on a selected port and kills them.
 
 ## Install
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Ma1y0/kill_port/main/install.sh)"
 ```
+Requires a curl and unzip.
